@@ -24,6 +24,7 @@ enum TodoAction: String, Codable {
 class AIService {
     private let apiKey: String
     private let baseURL = "https://api.anthropic.com/v1/messages"
+    private let dateParser = DateParser()
     
     init() {
         self.apiKey = ProcessInfo.processInfo.environment["CLAUDE_API_KEY"] ?? ""
@@ -37,11 +38,33 @@ class AIService {
             throw AIServiceError.noAPIKey
         }
         
+        let enhancedMessage = enhanceMessageWithDateParsing(message)
         let systemPrompt = createSystemPrompt(with: currentTodos)
-        let requestBody = createRequestBody(systemPrompt: systemPrompt, userMessage: message)
+        let requestBody = createRequestBody(systemPrompt: systemPrompt, userMessage: enhancedMessage)
         
         let response = try await makeAPIRequest(body: requestBody)
         return try parseResponse(response)
+    }
+    
+    private func enhanceMessageWithDateParsing(_ message: String) -> String {
+        let datePhrases = dateParser.extractDatePhrases(from: message)
+        
+        if datePhrases.isEmpty {
+            return message
+        }
+        
+        var enhancedMessage = message
+        var dateContext = "\n\nDetected date references:"
+        
+        for phrase in datePhrases {
+            if let parsedDate = dateParser.parseNaturalLanguageDate(from: phrase) {
+                let formatter = ISO8601DateFormatter()
+                let isoDate = formatter.string(from: parsedDate)
+                dateContext += "\n- '\(phrase)' = \(isoDate)"
+            }
+        }
+        
+        return enhancedMessage + dateContext
     }
     
     private func createSystemPrompt(with todos: [Todo]) -> String {

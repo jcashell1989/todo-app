@@ -19,25 +19,44 @@ A naturalistic todo app for macOS that uses Claude AI to help manage tasks throu
 - Xcode 15.0 or later
 - Claude API key from Anthropic
 
-### Installation
+### Quick Start
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd todo_app
+   git clone https://github.com/jcashell1989/todo-app.git
+   cd todo-app
    ```
 
-2. Set your Claude API key as an environment variable:
+2. Run the setup script to configure your API key:
+   ```bash
+   ./setup_env.sh
+   ```
+
+3. Launch the app:
+   ```bash
+   ./launch.sh
+   ```
+
+### Manual Setup
+
+If you prefer to set up manually:
+
+1. Get your Claude API key from [Anthropic's Console](https://console.anthropic.com/)
+
+2. Set the environment variable:
    ```bash
    export CLAUDE_API_KEY="your-api-key-here"
+   # Or add to your shell profile:
+   echo 'export CLAUDE_API_KEY="your-key"' >> ~/.zshrc
    ```
 
-3. Open the project in Xcode:
+3. Open in Xcode:
    ```bash
    open TodoApp.xcodeproj
    ```
 
-4. Build and run the project in Xcode
+4. In Xcode, you can also set the API key in:
+   Product → Scheme → Edit Scheme → Run → Environment Variables
 
 ### API Key Configuration
 
@@ -49,12 +68,22 @@ Set the API key as an environment variable:
 
 ## Usage
 
-1. Launch the app
+1. Launch the app using `./launch.sh` or open `TodoApp.xcodeproj` in Xcode
 2. Type natural language requests like:
    - "Add a todo to call mom tomorrow"
+   - "Remind me to buy groceries next Friday"
    - "What should I prioritize today?"
    - "Mark the grocery shopping as completed"
    - "Show me my high priority tasks"
+   - "I need to finish the report by next week"
+
+### Natural Language Date Support
+
+The app understands various date formats:
+- **Relative**: "tomorrow", "next week", "in 3 days"
+- **Days of week**: "monday", "next friday", "this saturday"
+- **Specific dates**: "12/25", "2024-03-15", "March 1st"
+- **Natural phrases**: "end of the week", "next month"
 
 ## Architecture
 
