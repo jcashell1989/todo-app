@@ -1,7 +1,7 @@
 import os
 import json
 import httpx
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 from datetime import datetime
 from models import Todo, TodoUpdate, AIResponse, TodoPriority, TodoStatus
 from services.date_parser import DateParser
@@ -162,7 +162,7 @@ Keep responses natural and conversational. Help prioritize and organize tasks th
         except Exception as e:
             raise Exception(f"Failed to parse API response: {str(e)}")
     
-    def _extract_todo_updates(self, text: str) -> tuple[str, Optional[List[TodoUpdate]]]:
+    def _extract_todo_updates(self, text: str) -> Tuple[str, Optional[List[TodoUpdate]]]:
         components = text.split("TODO_UPDATES:")
         
         if len(components) != 2:
