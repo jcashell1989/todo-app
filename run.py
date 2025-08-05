@@ -6,6 +6,7 @@ Checks environment and starts the Flask application.
 
 import os
 import sys
+import socket
 import webbrowser
 from time import sleep
 import threading
@@ -21,10 +22,23 @@ def check_environment():
     else:
         print("✅ Claude API key found")
 
-def open_browser():
+def find_available_port(start_port=5000):
+    """Find an available port starting from start_port"""
+    port = start_port
+    while port < start_port + 100:  # Try up to 100 ports
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.bind(('localhost', port))
+            sock.close()
+            return port
+        except OSError:
+            port += 1
+    raise RuntimeError(f"No available ports found in range {start_port}-{start_port+99}")
+
+def open_browser(port):
     """Open browser after a short delay"""
     sleep(2)  # Wait for Flask to start
-    webbrowser.open('http://localhost:5000')
+    webbrowser.open(f'http://localhost:{port}')
 
 def main():
     print("🌤️  Starting Todo Chat App...")
@@ -33,31 +47,26 @@ def main():
     # Check environment
     check_environment()
     
-    # Check if port is already in use
-    import socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = sock.connect_ex(('localhost', 5000))
-    sock.close()
-    
-    if result == 0:
-        print("❌ Port 5000 is already in use")
-        print("   Stop any other applications using port 5000 and try again")
+    # Find available port
+    try:
+        port = find_available_port(5000)
+        print(f"🚀 Starting server on http://localhost:{port}")
+        print("📱 App will open automatically in your browser")
+        print("🛑 Press Ctrl+C to stop the server")
+        print()
+    except RuntimeError as e:
+        print(f"❌ {e}")
         return 1
     
-    print("🚀 Starting server on http://localhost:5000")
-    print("📱 App will open automatically in your browser")
-    print("🛑 Press Ctrl+C to stop the server")
-    print()
-    
     # Open browser in background thread
-    browser_thread = threading.Thread(target=open_browser)
+    browser_thread = threading.Thread(target=open_browser, args=(port,))
     browser_thread.daemon = True
     browser_thread.start()
     
     # Import and run the Flask app
     try:
         from app import app, socketio
-        socketio.run(app, debug=False, host='0.0.0.0', port=5000)
+        socketio.run(app, debug=False, host='0.0.0.0', port=port)
     except KeyboardInterrupt:
         print("\n👋 Shutting down Todo Chat App...")
         return 0

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit
 import os
 import json
+import socket
 from datetime import datetime
 from services.ai_service import AIService
 from services.persistence import PersistenceManager
@@ -97,8 +98,25 @@ def handle_connect():
         'todos': [todo.to_dict() for todo in todos]
     })
 
+def find_available_port(start_port=5000):
+    """Find an available port starting from start_port"""
+    port = start_port
+    while port < start_port + 100:  # Try up to 100 ports
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.bind(('localhost', port))
+            sock.close()
+            return port
+        except OSError:
+            port += 1
+    raise RuntimeError(f"No available ports found in range {start_port}-{start_port+99}")
+
 if __name__ == '__main__':
     # Ensure directories exist
     os.makedirs('data', exist_ok=True)
     
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
+    # Find available port
+    port = find_available_port(5000)
+    print(f"Starting server on port {port}")
+    
+    socketio.run(app, debug=True, host='0.0.0.0', port=port)
