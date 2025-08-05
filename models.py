@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 import uuid
 
 class TodoPriority(Enum):
@@ -143,4 +143,4 @@ class TodoUpdate:
 @dataclass
 class AIResponse:
     message: str
-    todo_updates: Optional[list[TodoUpdate]] = None
+    todo_updates: Optional[List[TodoUpdate]] = None
