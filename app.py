@@ -6,7 +6,7 @@ import socket
 from datetime import datetime
 from services.ai_service import AIService
 from services.persistence import PersistenceManager
-from models import Message, Todo, MessageSender
+from models import Message, Todo, MessageSender, MessageType
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
@@ -72,7 +72,7 @@ def handle_message(data):
         error_message = Message(
             content="I'm having trouble processing that right now. Please try again.",
             sender=MessageSender.ASSISTANT,
-            message_type="error"
+            message_type=MessageType.ERROR
         )
         messages.append(error_message)
         persistence.save_messages(messages)

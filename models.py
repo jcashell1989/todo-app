@@ -118,7 +118,7 @@ class Message:
             'content': self.content,
             'sender': self.sender.value,
             'timestamp': self.timestamp.isoformat(),
-            'message_type': self.message_type.value
+            'message_type': self.message_type.value if isinstance(self.message_type, MessageType) else self.message_type
         }
     
     @classmethod

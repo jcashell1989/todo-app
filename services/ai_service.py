@@ -102,7 +102,7 @@ Keep responses natural and conversational. Help prioritize and organize tasks th
         }
         
         body = {
-            "model": "claude-3-sonnet-20240229",
+            "model": "claude-3-5-sonnet-20241022",
             "max_tokens": 1000,
             "messages": [
                 {
@@ -128,7 +128,7 @@ Keep responses natural and conversational. Help prioritize and organize tasks th
         }
         
         body = {
-            "model": "claude-3-sonnet-20240229",
+            "model": "claude-3-5-sonnet-20241022",
             "max_tokens": 1000,
             "messages": [
                 {
