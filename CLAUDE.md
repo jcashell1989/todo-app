@@ -4,34 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a naturalistic to-do app for macOS desktop that integrates conversational AI to help users manage tasks. The app emphasizes calm, readable design with persistent memory and natural language interaction.
+This is a naturalistic to-do app that runs as a Python web application in the browser. It integrates conversational AI to help users manage tasks with a calm, cloud-themed interface and fading message history.
 
 ## Core Requirements
 
 **Interface Design:**
-- GUI application for macOS desktop
-- Calm design with large, readable text
-- Messages flow upward and fade into scrollable history
-- Support for both voice and text input
-- Display conversation inputs and AI responses
+- Single-page web application running locally in browser
+- Cloud-themed design with soft blues, whites, and gradients
+- Single chat window with messages that gradually fade as they move upward
+- Natural language input for conversational task management
+- Real-time chat interface with WebSocket connectivity
 
 **Functionality:**
-- Natural language task prioritization assistance
-- Persistent storage for multi-day todo management
-- Conversational interface showing both user input and app responses
+- Natural language task prioritization assistance via Claude API
+- Persistent JSON-based storage for multi-day todo management
+- Conversational interface with fading message history effect
+- Natural language date parsing ("tomorrow", "next Friday", "in 3 days")
 
 ## Development Commands
 
 **Quick Setup:**
 ```bash
-./setup_env.sh    # Configure Claude API key
-./launch.sh       # Launch app in Xcode
+export CLAUDE_API_KEY='your-api-key-here'  # Set Claude API key
+pip install -r requirements.txt            # Install dependencies
+python run.py                              # Launch app (opens browser automatically)
 ```
 
 **Manual Commands:**
 ```bash
-open TodoApp.xcodeproj                           # Open in Xcode
-xcodebuild -project TodoApp.xcodeproj -scheme TodoApp build  # Build from CLI
+python app.py                              # Start Flask development server
+python -m flask --app app run --debug     # Start with debug mode
 ```
 
 **Development Process:**
@@ -39,30 +41,51 @@ xcodebuild -project TodoApp.xcodeproj -scheme TodoApp build  # Build from CLI
 - Use git and GitHub (`gh`) for version control
 - Focus on naturalistic language processing for task management
 - Test natural language date parsing with phrases like "tomorrow", "next Friday", "in 3 days"
+- Debug todos visibility with Ctrl+D in browser
 
 ## Current Architecture
 
 **Technology Stack:**
-- SwiftUI for native macOS interface
+- Flask + Socket.IO for real-time web application
+- HTML5 + CSS3 + JavaScript for cloud-themed frontend
 - Claude API for natural language processing
-- JSON-based persistence for local data storage
-- MVVM pattern with SwiftUI and ObservableObject
+- JSON-based file storage for persistence
+- httpx for async HTTP requests
 
 **Key Components:**
-- `ConversationManager`: Handles chat flow and todo operations
-- `AIService`: Claude API integration with natural language date parsing
-- `DateParser`: Parses relative dates ("tomorrow", "next week", etc.)
-- `PersistenceManager`: JSON file storage for todos and messages
-- Calm color theme with light blues and greys
+- `app.py`: Flask application with Socket.IO real-time chat
+- `models.py`: Todo and Message dataclasses with JSON serialization
+- `services/ai_service.py`: Claude API integration with date parsing
+- `services/date_parser.py`: Natural language date parsing
+- `services/persistence.py`: JSON file storage manager
+- `templates/index.html`: Single-page chat interface
+- `static/style.css`: Cloud theme with gradient fading effects
+- `static/script.js`: Real-time chat and fading message functionality
 
 **Project Structure:**
 ```
-TodoApp/
-├── Models/           # Todo and Message data structures
-├── Views/           # SwiftUI views (MainView, ConversationView, etc.)
-├── Services/        # AIService, DateParser, PersistenceManager
-├── Managers/        # ConversationManager business logic
-└── Theme/           # Color scheme and styling
+todo_app/
+├── app.py                    # Flask app with Socket.IO
+├── models.py                 # Todo and Message models
+├── run.py                    # Simple launcher script
+├── requirements.txt          # Python dependencies
+├── services/
+│   ├── ai_service.py        # Claude API integration
+│   ├── date_parser.py       # Natural language date parsing
+│   └── persistence.py       # JSON storage
+├── templates/
+│   └── index.html           # Single chat interface
+├── static/
+│   ├── style.css           # Cloud theme + fading effects
+│   └── script.js           # Chat functionality
+└── data/                   # JSON storage (auto-created)
+    ├── messages.json       # Chat history
+    └── todos.json          # Todo items
 ```
 
-The app emphasizes natural conversation flow with persistent memory and intelligent date recognition.
+**Key Features:**
+- Messages gradually fade as they scroll upward in chat history
+- Real-time chat with typing indicators
+- Natural conversation flow with persistent memory
+- Intelligent date recognition and parsing
+- Calm, cloud-inspired visual design

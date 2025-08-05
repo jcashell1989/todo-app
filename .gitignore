@@ -1,61 +1,52 @@
-# Xcode
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data storage
+data/
+backup/
+
+# Environment variables
+.env
+.env.local
+
+# Swift/Xcode (legacy)
+.build/
+.swiftpm/
 *.xcodeproj/
 *.xcworkspace/
-*.xcscmblueprint
-*.xccheckout
-*.moved-aside
-DerivedData/
-*.ipa
-*.dSYM.zip
-*.dSYM
 
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# API Keys and Sensitive Data
-.env
-config.plist
-secrets.plist
-APIKeys.plist
+# API keys
+*api_key*
 *API_KEY*
-*.key
-*secret*
-*token*
-
-# Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
+claude_api_key.txt

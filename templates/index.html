@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="messages-area" id="messagesArea">
+                <!-- Messages will be dynamically added here -->
+            </div>
+            
+            <div class="input-area">
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="Tell me what you need to do..." 
+                        autocomplete="off"
+                    >
+                    <button id="sendButton" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Optional: Hidden todos panel for debugging -->
+        <div class="todos-debug" id="todosDebug" style="display: none;">
+            <h3>Current Todos</h3>
+            <div id="todosList"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
