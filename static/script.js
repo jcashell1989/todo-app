@@ -168,14 +168,14 @@ function updateMessageFading() {
     
     messages.forEach((message, index) => {
         // Remove any existing fading classes
-        for (let i = 1; i <= 9; i++) {
+        for (let i = 1; i <= 10; i++) {
             message.classList.remove(`fading-${i}`);
         }
         
-        // Calculate fading level based on position from bottom
+        // Calculate fading level based on position from bottom - more gradual
         const positionFromBottom = totalMessages - index;
-        if (positionFromBottom > 10) {
-            const fadingLevel = Math.min(9, Math.floor((positionFromBottom - 10) / 2) + 1);
+        if (positionFromBottom > 8) {
+            const fadingLevel = Math.min(10, positionFromBottom - 7);
             message.classList.add(`fading-${fadingLevel}`);
         }
     });

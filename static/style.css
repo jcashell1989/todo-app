@@ -7,9 +7,9 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 50%, #fff8e1 100%);
+    background: linear-gradient(180deg, #f0f8ff 0%, #e6f3ff 30%, #f5f5f5 70%, #ffffff 100%);
     min-height: 100vh;
-    color: #2c3e50;
+    color: #4a5568;
 }
 
 .container {
@@ -24,21 +24,21 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    margin: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 0;
+    margin: 0;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
 }
 
 .messages-area {
     flex: 1;
     overflow-y: auto;
-    padding: 40px 30px 20px;
+    padding: 60px 40px 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     position: relative;
 }
 
@@ -47,40 +47,44 @@ body {
     content: '';
     position: sticky;
     top: 0;
-    height: 80px;
+    height: 120px;
     background: linear-gradient(180deg, 
-        rgba(255, 255, 255, 0.9) 0%, 
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0) 100%);
+        rgba(240, 248, 255, 0.95) 0%, 
+        rgba(240, 248, 255, 0.7) 40%,
+        rgba(240, 248, 255, 0.3) 70%,
+        rgba(240, 248, 255, 0) 100%);
     z-index: 1;
     pointer-events: none;
-    margin-bottom: -80px;
+    margin-bottom: -120px;
 }
 
 .message {
-    max-width: 80%;
-    padding: 16px 20px;
-    border-radius: 20px;
-    font-size: 16px;
-    line-height: 1.5;
+    max-width: 85%;
+    padding: 20px 24px;
+    border-radius: 24px;
+    font-size: 17px;
+    line-height: 1.6;
     position: relative;
-    animation: fadeIn 0.3s ease-out;
-    transition: opacity 0.3s ease-out;
+    animation: fadeIn 0.5s ease-out;
+    transition: opacity 1s ease-out;
+    margin-bottom: 8px;
 }
 
 .message.user {
     align-self: flex-end;
-    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
     color: white;
-    border-bottom-right-radius: 8px;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 2px 12px rgba(66, 153, 225, 0.2);
 }
 
 .message.assistant {
     align-self: flex-start;
-    background: rgba(255, 255, 255, 0.9);
-    color: #2c3e50;
-    border: 1px solid rgba(116, 185, 255, 0.2);
-    border-bottom-left-radius: 8px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #4a5568;
+    border: none;
+    border-bottom-left-radius: 6px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .message.system {
@@ -105,21 +109,22 @@ body {
     margin-top: 4px;
 }
 
-/* Fading effect based on scroll position */
-.message.fading-1 { opacity: 0.9; }
-.message.fading-2 { opacity: 0.8; }
-.message.fading-3 { opacity: 0.7; }
-.message.fading-4 { opacity: 0.6; }
-.message.fading-5 { opacity: 0.5; }
-.message.fading-6 { opacity: 0.4; }
-.message.fading-7 { opacity: 0.3; }
-.message.fading-8 { opacity: 0.2; }
-.message.fading-9 { opacity: 0.1; }
+/* Fading effect based on scroll position - more subtle and gradual */
+.message.fading-1 { opacity: 0.95; transform: translateY(-2px); }
+.message.fading-2 { opacity: 0.90; transform: translateY(-4px); }
+.message.fading-3 { opacity: 0.85; transform: translateY(-6px); }
+.message.fading-4 { opacity: 0.78; transform: translateY(-8px); }
+.message.fading-5 { opacity: 0.70; transform: translateY(-10px); }
+.message.fading-6 { opacity: 0.60; transform: translateY(-12px); }
+.message.fading-7 { opacity: 0.48; transform: translateY(-14px); }
+.message.fading-8 { opacity: 0.35; transform: translateY(-16px); }
+.message.fading-9 { opacity: 0.20; transform: translateY(-18px); }
+.message.fading-10 { opacity: 0.08; transform: translateY(-20px); }
 
 .input-area {
-    padding: 20px 30px 30px;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
+    padding: 25px 40px 40px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .input-container {
